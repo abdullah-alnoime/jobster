@@ -2,11 +2,11 @@ const handleError = (err, req, res, next) => {
   let customError = {
     status: err.status || 500,
     message: err.message || "Something went wrong try again later",
-    success: err.success || false
+    success: err.success || false,
   };
   if (err.name === "ValidationError") {
     customError.message = Object.values(err.errors)
-      .map(item => item.message)
+      .map((item) => item.message)
       .join(",");
     customError.status = 400;
   }
@@ -17,10 +17,13 @@ const handleError = (err, req, res, next) => {
     customError.status = 400;
   }
   if (err.name === "CastError") {
-    customError.message = `No item found with id : ${err.value}`;
+    console.log(err);
+    customError.message = `there is no job with id: ${err.value._id}`;
     customError.status = 404;
   }
-  return res.status(customError.status).json({ msg: customError.message, success: customError.success });
+  return res
+    .status(customError.status)
+    .json({ msg: customError.message, success: customError.success });
 };
 
 module.exports = handleError;

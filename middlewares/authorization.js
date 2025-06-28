@@ -3,11 +3,11 @@ const { Unauthorized } = require("../errors");
 
 const authorization = async (req, res, next) => {
   const authToken = req.headers.authorization;
-  if (!authToken && !authToken.startsWith("Bearer ")) {
+  if (!authToken || !authToken.startsWith("Bearer ")) {
     throw new Unauthorized("you're not authorized to access this route!");
   }
   try {
-    const token = jwt.verify(authToken.split(" ")[1]);
+    const token = jwt.verify(authToken.split(" ")[1], process.env.SECRET);
     if (!token) {
       throw new Unauthorized("you're not authorized to access this route!");
     }
