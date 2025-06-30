@@ -1,4 +1,9 @@
 @import "tailwindcss";
+
+::-webkit-scrollbar {
+  @apply hidden;
+}
+
 a.active {
   @apply text-red-600 font-bold bg-red-100 px-4 py-1.5 text-center rounded;
 }
