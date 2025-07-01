@@ -1,7 +1,11 @@
 import { useFormik } from "formik";
 import { validationSchema } from "./validationSchema";
+import { AlertCircle } from "lucide-react";
+import { useState } from "react";
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -23,103 +27,121 @@ const Register = () => {
         onSubmit={formik.handleSubmit}
       >
         <div className="grid gap-1.5">
-          <label htmlFor="name" className="text-gray-500 font-medium">
-            Full Name
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Full Name<span className="text-red-500">*</span>
           </label>
           <input
             type="text"
-            name="name"
             id="name"
-            className={`border outline-none rounded px-2 py-1 ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
               formik.touched.name && formik.errors.name
-                ? "border-red-500 focus:border-red-500"
-                : "border-gray-500 focus:border-red-500"
-            } focus:caret-red-500`}
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+            }`}
+            {...formik.getFieldProps("name")}
           />
           {formik.touched.name && formik.errors.name && (
-            <span className="text-red-500 text-sm">{formik.errors.name}</span>
+            <p className="text-red-600 text-sm mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {formik.errors.name}
+            </p>
           )}
         </div>
         <div className="grid gap-1.5">
-          <label htmlFor="email" className="text-gray-500 font-medium">
-            Email
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Email<span className="text-red-500">*</span>
           </label>
           <input
             type="email"
-            name="email"
             id="email"
-            className={`border outline-none rounded px-2 py-1 ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
               formik.touched.email && formik.errors.email
-                ? "border-red-500 focus:border-red-500"
-                : "border-gray-500 focus:border-red-500"
-            } focus:caret-red-500`}
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+            }`}
+            {...formik.getFieldProps("email")}
           />
           {formik.touched.email && formik.errors.email && (
-            <span className="text-red-500 text-sm">{formik.errors.email}</span>
+            <p className="text-red-600 text-sm mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {formik.errors.email}
+            </p>
           )}
         </div>
         <div className="grid gap-1.5">
-          <label htmlFor="password" className="text-gray-500 font-medium">
-            Password
+          <label
+            htmlFor="password"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Password<span className="text-red-500">*</span>
           </label>
           <input
             type="password"
-            name="password"
             id="password"
-            className={`border outline-none rounded px-2 py-1 ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
               formik.touched.password && formik.errors.password
-                ? "border-red-500 focus:border-red-500"
-                : "border-gray-500 focus:border-red-500"
-            } focus:caret-red-500`}
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+            }`}
+            {...formik.getFieldProps("password")}
           />
           {formik.touched.password && formik.errors.password && (
-            <span className="text-red-500 text-sm">
+            <p className="text-red-600 text-sm mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
               {formik.errors.password}
-            </span>
+            </p>
           )}
         </div>
         <div className="grid gap-1.5">
           <label
             htmlFor="confirmPassword"
-            className="text-gray-500 font-medium"
+            className="block text-sm font-medium text-gray-700 mb-2"
           >
-            Confirm Password
+            Confirm Password<span className="text-red-500">*</span>
           </label>
           <input
             type="password"
-            name="confirmPassword"
             id="confirmPassword"
-            className={`border outline-none rounded px-2 py-1 ${
+            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
               formik.touched.confirmPassword && formik.errors.confirmPassword
-                ? "border-red-500 focus:border-red-500"
-                : "border-gray-500 focus:border-red-500"
-            } focus:caret-red-500`}
-            value={formik.values.confirmPassword}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+            }`}
+            {...formik.getFieldProps("confirmPassword")}
           />
           {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-            <span className="text-red-500 text-sm">
+            <p className="text-red-600 text-sm mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
               {formik.errors.confirmPassword}
-            </span>
+            </p>
           )}
         </div>
         <button
           type="submit"
-          className="bg-red-500 text-white px-4 py-1.5 rounded hover:bg-red-600 disabled:bg-gray-400"
+          className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 cursor-pointer disabled:cursor-not-allowed transition-colors duration-200 font-medium flex items-center justify-center"
           disabled={!(formik.isValid && formik.dirty)}
         >
-          Register
+          {loading ? (
+            <>
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+              Registering...
+            </>
+          ) : (
+            <>Register</>
+          )}
         </button>
+        {error && (
+          <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-center">
+            <AlertCircle className="w-5 h-5 text-red-600 mr-3" />
+            <p className="text-red-800">{error}</p>
+          </div>
+        )}
       </form>
     </section>
   );

@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <section className="h-full grid gap-4 items-center md:grid-cols-2">
       <div className="grid gap-4">
-        <h1 className="font-bold text-2xl xl:text-3xl">
+        <h1 className="font-bold text-2xl xl:text-4xl">
           Job <span className="text-red-500">Tracking</span> App
         </h1>
         <p className="leading-relaxed text-gray-700 xl:w-3/4">

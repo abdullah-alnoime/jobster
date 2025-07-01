@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Briefcase, Building2, Filter, Search } from "lucide-react";
+import {
+  AlertCircle,
+  Briefcase,
+  Building2,
+  Filter,
+  Search,
+} from "lucide-react";
 import { getStatusColor, getJobTypeIcon } from "../../utils/jobs";
 import { validationSchema } from "./validationSchema";
 import { useFormik } from "formik";
@@ -42,16 +48,13 @@ const Jobs = () => {
               <div>
                 <input
                   type="text"
-                  name="company"
                   placeholder="Company name..."
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                     formik.touched.company && formik.errors.company
-                      ? "border-red-500"
+                      ? "border-red-500 bg-red-50"
                       : "border-gray-300"
                   }`}
-                  value={formik.values.company}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  {...formik.getFieldProps("company")}
                 />
                 {formik.touched.company && formik.errors.company && (
                   <p className="text-red-500 text-xs mt-1">
@@ -62,16 +65,13 @@ const Jobs = () => {
               <div>
                 <input
                   type="text"
-                  name="position"
                   placeholder="Position title..."
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                     formik.touched.position && formik.errors.position
-                      ? "border-red-500"
+                      ? "border-red-500 bg-red-50"
                       : "border-gray-300"
                   }`}
-                  value={formik.values.position}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  {...formik.getFieldProps("position")}
                 />
                 {formik.touched.position && formik.errors.position && (
                   <p className="text-red-500 text-xs mt-1">
@@ -81,15 +81,12 @@ const Jobs = () => {
               </div>
               <div>
                 <select
-                  name="status"
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white ${
+                  className={`w-full px-4 py-3 border rounded-lg cursor-pointer focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                     formik.touched.status && formik.errors.status
-                      ? "border-red-500"
+                      ? "border-red-500 bg-red-50"
                       : "border-gray-300"
                   }`}
-                  value={formik.values.status}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  {...formik.getFieldProps("status")}
                 >
                   <option value="">All Status</option>
                   <option value="pending">Pending</option>
@@ -104,15 +101,12 @@ const Jobs = () => {
               </div>
               <div>
                 <select
-                  name="jobType"
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white ${
+                  className={`w-full px-4 py-3 border rounded-lg cursor-pointer focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                     formik.touched.jobType && formik.errors.jobType
-                      ? "border-red-500"
+                      ? "border-red-500 bg-red-50"
                       : "border-gray-300"
                   }`}
-                  value={formik.values.jobType}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
+                  {...formik.getFieldProps("jobType")}
                 >
                   <option value="">All Types</option>
                   <option value="full-time">Full-time</option>
@@ -130,11 +124,14 @@ const Jobs = () => {
               <div className="flex gap-2">
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition-colors duration-200 font-medium flex items-center justify-center"
+                  disabled={!(formik.isValid && formik.dirty)}
+                  className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 cursor-pointer disabled:cursor-not-allowed font-medium transition-colors duration-200 flex items-center justify-center"
                 >
                   {loading ? (
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+                      Searching...
+                    </>
                   ) : (
                     <>
                       <Search className="w-4 h-4 mr-2" />
@@ -143,24 +140,25 @@ const Jobs = () => {
                   )}
                 </button>
                 <button
-                  type="button"
+                  type="reset"
                   onClick={() => {
                     formik.resetForm();
                   }}
-                  className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                  className="px-3 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 cursor-pointer"
                   title="Clear filters"
                 >
                   <Filter className="w-4 h-4" />
                 </button>
               </div>
             </div>
+            {error && (
+              <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-center">
+                <AlertCircle className="w-5 h-5 text-red-600 mr-3" />
+                <p className="text-red-800">{error}</p>
+              </div>
+            )}
           </form>
         </div>
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <p className="text-red-800">Error: {error}</p>
-          </div>
-        )}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {jobs.length > 0 ? (
             jobs.map((job) => (

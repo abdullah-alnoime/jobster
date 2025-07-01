@@ -15,7 +15,7 @@ const App = () => {
   return (
     <div className="min-h-dvh container mx-auto grid grid-rows-[auto_1fr_auto]">
       <Header />
-      <main className="px-6 py-5">
+      <main className="py-6 px-4">
         <Routes>
           <Route index element={<Home />} />
           <Route path="auth/login" element={<Login />} />
